@@ -1,0 +1,27 @@
+{
+  "name": "server-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ignacioborraz/server-NODEJS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ignacioborraz/server-NODEJS/issues"
+  },
+  "homepage": "https://github.com/ignacioborraz/server-NODEJS#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.7",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^2.0.22"
+  }
+}

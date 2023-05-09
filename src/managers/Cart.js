@@ -44,15 +44,16 @@ class Cart {
   read_cart(id) {
     return this.carts.find((each) => each.id === id);
   }
+
   async update_cart(cid, pid, x) {
     try {
       let auxCart = this.read_cart(cid);
       let auxProducts = managerProducts.read_products();
-      console.log(auxProducts);
       let auxProduct = managerProducts.read_product(pid);
-      if (auxProduct.stock > x || auxProduct.stock !== 0) {
-        auxCart.products.push(...auxCart.products, {
+      if (auxProduct.stock > x) {
+        auxCart.products.push({
           id: auxProduct.id,
+          title: auxProduct.title,
           units: x,
         });
       }
@@ -64,7 +65,40 @@ class Cart {
           managerProducts.update_product(pid, element);
         }
       }
-      this.carts.push(auxCart);
+      // this.carts.push(auxCart);
+      let data_json = JSON.stringify(this.carts, null, 2);
+      await fs.promises.writeFile(this.path, data_json);
+      return 200;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  async delete_cart(cid, pid, x) {
+    try {
+      let auxCart = this.read_cart(cid);
+      let auxCartProduct = findProduct(auxCart, pid, x);
+      let auxProducts = managerProducts.read_products();
+      console.log(auxProducts);
+      let auxProduct = managerProducts.read_product(pid);
+      function findProduct(auxCart, pid, x) {
+        let foundProduct = auxCart.products.find(
+          (product) => product.id === pid
+        );
+        if (foundProduct) {
+          foundProduct.units -= x;
+        }
+        return foundProduct;
+      }
+
+      for (let index = 0; index < auxProducts.length; index++) {
+        let element = auxProducts[index];
+        if (pid === element.id) {
+          auxProducts[index].stock = element.stock + x;
+          managerProducts.update_product(pid, element);
+        }
+      }
       let data_json = JSON.stringify(this.carts, null, 2);
       await fs.promises.writeFile(this.path, data_json);
       return 200;

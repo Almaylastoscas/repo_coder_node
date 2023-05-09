@@ -54,6 +54,21 @@ router.put("/:cid/product/:pid/:units", async (req, res, next) => {
     next(error);
   }
 });
+router.delete("/:cid/product/:pid/:units", async (req, res, next) => {
+  try {
+    let id = Number(req.params.pid);
+    let cid = Number(req.params.cid);
+    let units = Number(req.params.units);
+
+    let response = await managerCart.delete_cart(cid, id, units);
+    if (response === 200) {
+      return res.json({ status: 200, message: "cart delete" });
+    }
+    return res.json({ status: 404, message: "not found" });
+  } catch (error) {
+    next(error);
+  }
+});
 router.delete("/:pid", async (req, res, next) => {
   try {
     let id = Number(req.params.pid);

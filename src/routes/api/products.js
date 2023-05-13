@@ -3,15 +3,43 @@ import managerProducts from "./../../managers/Product.js";
 
 const router = Router();
 
+// router.post("/", async (req, res, next) => {
+//   try {
+//     let response = await managerProducts.add_product(req.body);
+//     if (response === 201) {
+//       return res.json({ status: 201, message: "product created" });
+//     }
+//     return res.json({ status: 400, message: "not created" });
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 router.post("/", async (req, res, next) => {
   try {
-    let response = await managerProducts.add_product(req.body);
+    let title = req.body.title;
+    let description = req.body.description;
+    let price = Number(req.body.price);
+    let thumbnail = req.body.thumbnail;
+    let stock = Number(req.body.stock);
+
+    // Ejecutar la función de añadir producto correctamente y manejar errores
+    let response = await managerProducts.add_product({
+      title,
+      description,
+      price,
+      thumbnail,
+      stock,
+    });
     if (response === 201) {
-      return res.json({ status: 201, message: "product created" });
+      return res.redirect("/");
+      // ,res.json({ status:201,message:'product created'});
     }
-    return res.json({ status: 400, message: "not created" });
+
+    return res
+      .status(400)
+      .json({ status: 400, message: "Product not created" }); // Manejar error genérico
   } catch (error) {
-    next(error);
+    next(error); // Manejar errores correctamente
   }
 });
 router.get("/", async (req, res, next) => {

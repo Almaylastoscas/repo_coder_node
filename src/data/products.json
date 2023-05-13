@@ -14,5 +14,13 @@
     "url_photo": "url de producto 3",
     "price": 15,
     "id": 4
+  },
+  {
+    "title": "sdas",
+    "description": "asdasd",
+    "stock": 23123,
+    "thumbnail": "sdfsdfdfs",
+    "price": 1231,
+    "id": 5
   }
 ]

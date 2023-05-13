@@ -18,10 +18,10 @@ class Product {
       return 200;
     }
   }
-  async add_product({ title, description, stock, url_photo, price }) {
+  async add_product({ title, description, stock, thumbnail, price }) {
     try {
-      if (title && description && stock && url_photo && price) {
-        let data = { title, description, stock, url_photo, price };
+      if (title && description && stock && thumbnail && price) {
+        let data = { title, description, stock, thumbnail, price };
         if (this.products.length > 0) {
           let next_id = this.products[this.products.length - 1].id + 1;
           data.id = next_id;
